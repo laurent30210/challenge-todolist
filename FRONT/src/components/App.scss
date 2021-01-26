@@ -1,0 +1,12 @@
+.app {
+  width: 600px;
+  min-height: 500px;
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(227,227,227,1) 52%, rgba(228,228,228,1) 100%); 
+  backdrop-filter: blur(12rem);
+  border-radius: 6px;
+  &__title {
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
