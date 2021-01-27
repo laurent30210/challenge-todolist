@@ -10,24 +10,25 @@ import tasksArray from '../../tasks'
 import './App.scss';
 
 
-/*interface StateId {
-  id: number;
-};*/
-
 function App() {
 
-  //const [tasks, setTasks] = useState(arrayTask);
-  const [value, setValue] = useState("");
-  //const [id, setId] = useState<StateId>({id: 0});
 
-  console.log(tasksArray);
-
+  const [tasks, setTasks] = useState(tasksArray);
+  const [value, setValue] = useState<string>("");
+  const [id, setId] = useState<number>(1);
+  
   return (
     <div className="app">
       <h1 className="app-title">todolist</h1>
       <section className="app-container">
-        <Form value={value} setValue={setValue} />
-        <Tasks />
+        <Form
+          value={value}
+          handleValue={setValue}
+          id={id}
+          handleId={setId}
+          tasks={tasks}
+        />
+        <Tasks tasks={tasks} />
         <Counter counter={4} />
       </section>
     </div>

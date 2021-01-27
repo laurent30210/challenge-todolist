@@ -3,22 +3,22 @@
  export default [
     {
       id: 1,
-      name: 'Trouver la réponse',
+      content: 'Trouver la réponse',
       completed: true,
     },
     {
       id: 2,
-      name: 'Tester',
+      content: 'Tester',
       completed: false,
     },
     {
       id: 3,
-      name: 'Apprendre',
+      content: 'Apprendre',
       completed: false,
     },
     {
       id: 4,
-      name: 'Explorer',
+      content: 'Explorer',
       completed: false,
     },
   ];

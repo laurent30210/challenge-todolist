@@ -5,13 +5,24 @@ import Task from '../Task';
 // import CSS
 import './Tasks.scss';
 
-const Tasks = () => (  
+type Task = {
+    id: number;
+    content: string;
+    completed?: boolean
+};
+
+const Tasks = ({ tasks }) => (  
     <ul className="tasks">
-       <Task />
-       <Task />
-       <Task />
-       <Task />
-       <Task />
+        {tasks.map((task: Array<Task>) => (
+            <Task
+                key={task.id}
+                content={task.content}
+                id={tasks.id}
+                completed={task.completed}
+            />
+
+        ))}
+      
     </ul>
 )
 

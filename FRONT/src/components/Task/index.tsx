@@ -5,9 +5,9 @@ import React from 'react';
 // import CSS
 import './Task.scss';
 
-const Task = () => (  
-    <li className="task">
-        tache en cours
+const Task = ({ content, completed }) => (  
+    <li className={completed ? 'task tasks--completed' : 'task'}>
+        {content}
         <div className="task-container-btn">
             <button className="button button-check">
                 <i className="fas fa-check"></i>
