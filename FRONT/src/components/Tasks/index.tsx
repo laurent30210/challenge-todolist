@@ -13,7 +13,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) => (
     <form>
         <ul className="tasks">
             {tasks.map((task) =>(
-                <li key={task.id} className='task task--completed'>
+                <li key={task.id} className={task.completed ? 'task task--completed' : 'task'}>
                 <label>
                 {task.content}
                 </label>   

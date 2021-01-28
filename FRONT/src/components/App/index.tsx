@@ -12,7 +12,7 @@ import './App.scss';
 
 const App: React.FC = () => {
 
-const tasksArray: Array<Task> = [
+  const tasksArray: Array<Task> = [
   {
     id: 1,
       content: 'Trouver la réponse',
@@ -35,9 +35,12 @@ const tasksArray: Array<Task> = [
     },
   ];
 
+
   const [tasks, setTasks] = useState(tasksArray);
   const [value, setValue] = useState("");
 
+  const findLengthArray = () => tasks.length;
+  console.log(findLengthArray);
 
   useEffect(() => {
 
@@ -50,8 +53,7 @@ const tasksArray: Array<Task> = [
     .catch((error) => {
       console.error(error);
     });
-  }, []) 
-
+  }, []); 
   
   return (
     <div className="app">
@@ -62,6 +64,7 @@ const tasksArray: Array<Task> = [
           handleValue={setValue}
         />
         <Tasks tasks={tasks} />
+        
       </section>
     </div>
   );
