@@ -1,13 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 // import CSS
 import './Form.scss';
 
-type Task = {
-    id: number;
-    content: string;
-    completed?: boolean
-};
 
 // Create interface for the props's Form
 interface FormProps {
@@ -15,13 +10,7 @@ interface FormProps {
   handleValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-
-
 const Form: React.FC<FormProps>  = ({ value, handleValue }) => {
-
-  // TS for HTML elements
-  const formRef = useRef<HTMLFormElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
 
   // FUNCTION
   const submitTask = (event: React.FormEvent) => {
@@ -34,19 +23,16 @@ const Form: React.FC<FormProps>  = ({ value, handleValue }) => {
       content: value,
       completed: false
     }]);*/
-    // initialize value at empty
+    // initialize value
     handleValue('');
-
   }
 
   return (
     <form 
-      ref={formRef}
       className="form"
       onSubmit={submitTask}
     >
       <input
-        ref={inputRef}
         className="form-input"
         type="text"
         value={value}

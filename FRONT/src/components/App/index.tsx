@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // import components
 import Tasks from '../Tasks';
+import Form from '../Form';
 
 import { Task } from '../../../src/interfaces/Task';
 // import CSS
@@ -35,6 +36,8 @@ const tasksArray: Array<Task> = [
   ];
 
   const [tasks, setTasks] = useState(tasksArray);
+  const [value, setValue] = useState("");
+
 
   useEffect(() => {
 
@@ -54,6 +57,10 @@ const tasksArray: Array<Task> = [
     <div className="app">
       <h1 className="app-title">todolist</h1>
       <section className="app-container">
+        <Form 
+          value={value}
+          handleValue={setValue}
+        />
         <Tasks tasks={tasks} />
       </section>
     </div>
