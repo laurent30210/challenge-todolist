@@ -13,13 +13,12 @@ type Task = {
 interface FormProps {
   value: string;
   handleValue: React.Dispatch<React.SetStateAction<string>>;
-  id: number;
-  handleId: React.Dispatch<React.SetStateAction<number>>;
-  tasks: Array<Task>;
 };
 
 
-const Form: React.FC<FormProps>  = ({ value, handleValue, id, handleId, tasks }) => {
+
+const Form: React.FC<FormProps>  = ({ value, handleValue }) => {
+
   // TS for HTML elements
   const formRef = useRef<HTMLFormElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -28,8 +27,8 @@ const Form: React.FC<FormProps>  = ({ value, handleValue, id, handleId, tasks })
   const submitTask = (event: React.FormEvent) => {
     event.preventDefault();
     // Add 1 at id for each new task
-    handleId(id + 1);
     // Add new task in state
+    // sendNewTaskAtAPI() 
    /* handleTasks([...tasks, {
       id: id,
       content: value,
