@@ -5,42 +5,59 @@ import axios from 'axios';
 import Tasks from '../Tasks';
 import Form from '../Form';
 
-import { Task } from '../../../src/interfaces/Task';
 // import CSS
 import './App.scss';
 
 
 const App: React.FC = () => {
 
-  const tasksArray: Array<Task> = [
-  {
-    id: 1,
-      content: 'Trouver la réponse',
-      completed: true,
-    },
-    {
-      id: 2,
-      content: 'Tester',
-      completed: false,
-    },
-    {
-      id: 3,
-      content: 'Apprendre',
-      completed: false,
-    },
-    {
-      id: 4,
-      content: 'Explorer',
-      completed: false,
-    },
-  ];
-
-
-  const [tasks, setTasks] = useState(tasksArray);
+  
+  const [tasks, setTasks] = useState([]);
   const [value, setValue] = useState("");
 
-  const findLengthArray = () => tasks.length;
-  console.log(findLengthArray);
+  const findLengthArray = () => {
+    console.log('tasks.length');
+  };
+
+  const removeTask = (event: Event, taskId: any) => {
+    
+    axios.delete(`http://localhost:1337/tasks/${taskId}`)
+    .then((response) => {
+      console.log(response.status);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    
+    console.log(taskId, event.target);
+  };
+
+  const completedTask = (event: Event, i: any) => {
+    console.log(event, i)
+  };
+
+  const addTask = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log('submit', value);
+    
+    axios({
+      method: 'post',
+      url: '/http://localhost:1337/tasks/',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data: {
+        content: {value},
+        completed: null
+      }
+    })
+    .then((response) => {
+      console.log(response.status);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  };
 
   useEffect(() => {
 
@@ -63,8 +80,12 @@ const App: React.FC = () => {
           value={value}
           handleValue={setValue}
         />
-        <Tasks tasks={tasks} />
-        
+        <Tasks
+          tasks={tasks}
+          removeTask={removeTask}
+          completedTask={completedTask}
+        />
+
       </section>
     </div>
   );
