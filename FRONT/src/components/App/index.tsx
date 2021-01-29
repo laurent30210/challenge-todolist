@@ -12,12 +12,9 @@ const App: React.FC = () => {
 
   
   const [tasks, setTasks] = useState([]);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
-  const findLengthArray = () => {
-    console.log('tasks.length');
-  };
-
+  // FUNCTION FOR GET LIST FROM API 
   const getDataFromAPI = () => {
     axios.get(`http://localhost:1337/tasks`)
     .then((response) => {
@@ -30,7 +27,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // launch request for get tasks
+    // launch request
     getDataFromAPI();
   }, []); 
   
@@ -41,9 +38,11 @@ const App: React.FC = () => {
         <Form 
           value={value}
           handleValue={setValue}
+          getDataFromAPI={getDataFromAPI}
         />
         <Tasks
           tasks={tasks}
+          getDataFromAPI={getDataFromAPI}
         />
 
       </section>

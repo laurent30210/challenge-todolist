@@ -18,6 +18,22 @@
     text-decoration: line-through;
     font-style: italic;
   }
+  &-label {
+    width: 70%;
+  }
+  &-input {
+    border: none;
+    background-color: transparent;
+    color: teal;
+    font-size: 1.1rem;
+    &:focus {
+      outline: none;
+    }
+  &-container-btn {
+    position: relative;
+  }
+  }
+  
 }
 .button {
   padding: .6rem;
@@ -39,3 +55,8 @@
     }
   }
 }
+[type="checkbox"]:not(:checked),
+  [type="checkbox"]:checked {
+    width: 30px;
+    height: 30px;
+  }

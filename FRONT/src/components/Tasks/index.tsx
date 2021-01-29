@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Task } from '../../../src/interfaces/Task';
 import axios from 'axios';
 
@@ -7,15 +7,19 @@ import './Tasks.scss';
 
 interface TasksProps {
     tasks: Array<Task>;
-    // getDataFromAPI: () => any;
+    getDataFromAPI: () => void;
 };
 
+const Tasks: React.FC<TasksProps> = ({ tasks, getDataFromAPI }) =>  {
 
-const Tasks: React.FC<TasksProps> = ({ tasks }) =>  {
-
-    const removeTask = (event: any) => {    
-        const taskId = event.target.id;
-
+    const [valueTask, setvalueTask] = useState<string>("");
+    const [editTaskId, setEditTaskId] = useState<string>("");
+    
+// REMOVE TASK
+    const removeTask = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {  
+        // GET ID   
+        const taskId: string = (event.target as HTMLDataElement).id;
+        // REQUEST 
         axios.delete(`http://localhost:1337/tasks/${taskId}`)
         .then((response) => {
           console.log(response.status);
@@ -24,13 +28,16 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) =>  {
           console.error(error);
         })
         .finally(() => {
-            // getDataFromAPI()
+            // REFRESH LIST WITH A NEW REQUEST
+            getDataFromAPI()
         });        
     };
-
-    const completedTask = (event: any) => {    
-        const taskId = event.target.id;
-        const completed = event.target.checked;
+// TASK COMPLETED
+    const completedTask = (event: React.ChangeEvent<HTMLInputElement>) => { 
+        // GET ID   
+        const taskId: string = event.target.id;
+        // GET VALUE CHECKBOX
+        const completed: boolean = event.target.checked;
 
         axios({
             method: 'put',
@@ -46,28 +53,76 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) =>  {
           console.error(error);
         })
         .finally(() => {
-            // getDataFromAPI()
+            // REFRESH LIST WITH A NEW REQUEST
+            getDataFromAPI()
         });
-    };   
+    }; 
+// SHOW LABEL IF TASK SELECTED
+    const displayInput = (event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+        setEditTaskId((event.target as HTMLDataElement).id);
+    }; 
+// GET A NEW VALUE
+    const updateTask = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setvalueTask((event.target as HTMLDataElement).value);
+    };
+// SUBMIT THE NEW TASK
+    const submitUpdateTask = (event: React.FormEvent) => {
+        event.preventDefault();
+
+        axios({
+            method: 'put',
+            url: `http://localhost:1337/tasks/${editTaskId}`,
+            headers: { 
+              'Content-Type': 'application/json'
+            },
+            data: {
+              "content": valueTask
+            }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+            // REFRESH LIST AND INITIALIZE STATE
+            getDataFromAPI();
+            setvalueTask('');
+            setEditTaskId('');
+        });
+    };
+
 
     return (
-        <form>
+        <form
+            onSubmit={submitUpdateTask}
+        >
             <ul className="tasks">
                 {tasks.map((task) =>(
                     <li key={task.id} className={task.completed ? 'task task--completed' : 'task'}>
-                        <label>
-                            {task.content}
-                        </label>   
+                        {editTaskId == task.id ? ( 
+                            <input
+                                className="task-input"
+                                type="text"
+                                id={task.id}
+                                placeholder={task.content}
+                                value={valueTask}
+                                onChange={updateTask}
+                            />
+                                )
+                                : <label
+                                className="task-label"
+                                id={task.id}
+                                onClick={displayInput}
+                            >
+                                {task.content}
+                            </label> }  
                     <div className="task-container-btn">
                         <input
                           type="checkbox"
                           id={task.id}
                           defaultChecked={task.completed}
                           onChange={completedTask}
-
                         />
                         <i 
-                        id={task.id}
                         className="fas fa-check button button-check"
                         />
                         <i

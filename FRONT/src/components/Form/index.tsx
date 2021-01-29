@@ -9,15 +9,15 @@ import './Form.scss';
 interface FormProps {
   value: string;
   handleValue: React.Dispatch<React.SetStateAction<string>>;
+  getDataFromAPI: () => void;
 };
 
-const Form: React.FC<FormProps>  = ({ value, handleValue }) => {
+const Form: React.FC<FormProps>  = ({ value, handleValue, getDataFromAPI }) => {
 
-  // FUNCTION
+  // FUNCTION 
   const submitTask = (event: React.FormEvent) => {
     event.preventDefault();
-    // Add 1 at id for each new task
-    // Add new task in state
+    
     axios({
       method: 'post',
       url: 'http://localhost:1337/tasks/',
@@ -35,6 +35,9 @@ const Form: React.FC<FormProps>  = ({ value, handleValue }) => {
     })
     .catch((error) => {
       console.error(error);
+    })
+    .finally(() => {
+      getDataFromAPI()
     });
     // initialize value
     handleValue('');
