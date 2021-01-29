@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 // import CSS
 import './Form.scss';
@@ -17,12 +18,24 @@ const Form: React.FC<FormProps>  = ({ value, handleValue }) => {
     event.preventDefault();
     // Add 1 at id for each new task
     // Add new task in state
-    // sendNewTaskAtAPI() 
-   /* handleTasks([...tasks, {
-      id: id,
-      content: value,
-      completed: false
-    }]);*/
+    axios({
+      method: 'post',
+      url: 'http://localhost:1337/tasks/',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data: {
+        "id": "",
+        "content": value,
+        "completed": false
+      }
+    })
+    .then((response) => {
+      console.log(response.status);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
     // initialize value
     handleValue('');
   }

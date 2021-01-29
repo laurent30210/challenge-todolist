@@ -8,7 +8,6 @@ import Form from '../Form';
 // import CSS
 import './App.scss';
 
-
 const App: React.FC = () => {
 
   
@@ -19,49 +18,7 @@ const App: React.FC = () => {
     console.log('tasks.length');
   };
 
-  const removeTask = (event: Event, taskId: any) => {
-    
-    axios.delete(`http://localhost:1337/tasks/${taskId}`)
-    .then((response) => {
-      console.log(response.status);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-    
-    console.log(taskId, event.target);
-  };
-
-  const completedTask = (event: Event, i: any) => {
-    console.log(event, i)
-  };
-
-  const addTask = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log('submit', value);
-    
-    axios({
-      method: 'post',
-      url: '/http://localhost:1337/tasks/',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data: {
-        content: {value},
-        completed: null
-      }
-    })
-    .then((response) => {
-      console.log(response.status);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  };
-
-  useEffect(() => {
-
-    // launch request for get tasks
+  const getDataFromAPI = () => {
     axios.get(`http://localhost:1337/tasks`)
     .then((response) => {
       console.log(response.data);
@@ -70,6 +27,11 @@ const App: React.FC = () => {
     .catch((error) => {
       console.error(error);
     });
+  };
+
+  useEffect(() => {
+    // launch request for get tasks
+    getDataFromAPI();
   }, []); 
   
   return (
@@ -82,8 +44,6 @@ const App: React.FC = () => {
         />
         <Tasks
           tasks={tasks}
-          removeTask={removeTask}
-          completedTask={completedTask}
         />
 
       </section>
