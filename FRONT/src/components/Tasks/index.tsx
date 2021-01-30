@@ -69,25 +69,32 @@ const Tasks: React.FC<TasksProps> = ({ tasks, getDataFromAPI }) =>  {
     const submitUpdateTask = (event: React.FormEvent) => {
         event.preventDefault();
 
-        axios({
-            method: 'put',
-            url: `http://localhost:1337/tasks/${editTaskId}`,
-            headers: { 
-              'Content-Type': 'application/json'
-            },
-            data: {
-              "content": valueTask
-            }
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-            // REFRESH LIST AND INITIALIZE STATE
-            getDataFromAPI();
-            setvalueTask('');
-            setEditTaskId('');
-        });
+        if (!valueTask || /^s*$/.test(valueTask)) {
+            return;
+        } 
+        if (/^[<>:]/.test(valueTask)) {
+            return;
+        }
+                axios({
+                    method: 'put',
+                    url: `http://localhost:1337/tasks/${editTaskId}`,
+                    headers: { 
+                      'Content-Type': 'application/json'
+                    },
+                    data: {
+                      "content": valueTask
+                    }
+                })
+                .catch((error) => {
+                  console.error(error);
+                })
+                .finally(() => {
+                    // REFRESH LIST AND INITIALIZE STATE
+                    getDataFromAPI();
+                    setvalueTask('');
+                    setEditTaskId('');
+                });
+
     };
 
 
@@ -103,27 +110,25 @@ const Tasks: React.FC<TasksProps> = ({ tasks, getDataFromAPI }) =>  {
                                 className="task-input"
                                 type="text"
                                 id={task.id}
-                                placeholder={task.content}
+                                placeholder="mode édition"
                                 value={valueTask}
                                 onChange={updateTask}
+                                
                             />
                                 )
                                 : <label
-                                className="task-label"
+                                className={task.completed ? 'task-label task-label--completed' : 'task-label'}
                                 id={task.id}
                                 onClick={displayInput}
                             >
                                 {task.content}
                             </label> }  
-                    <div className="task-container-btn">
+                    <div className="task-containerBtn">
                         <input
                           type="checkbox"
                           id={task.id}
                           defaultChecked={task.completed}
                           onChange={completedTask}
-                        />
-                        <i 
-                        className="fas fa-check button button-check"
                         />
                         <i
                         id={task.id}

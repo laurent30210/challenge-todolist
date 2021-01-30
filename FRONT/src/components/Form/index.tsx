@@ -17,7 +17,9 @@ const Form: React.FC<FormProps>  = ({ value, handleValue, getDataFromAPI }) => {
   // FUNCTION 
   const submitTask = (event: React.FormEvent) => {
     event.preventDefault();
-    
+    if (!value || /^s*$/.test(value)) {
+      return;
+    } 
     axios({
       method: 'post',
       url: 'http://localhost:1337/tasks/',
@@ -39,6 +41,8 @@ const Form: React.FC<FormProps>  = ({ value, handleValue, getDataFromAPI }) => {
     .finally(() => {
       getDataFromAPI()
     });
+    
+    
     // initialize value
     handleValue('');
   }

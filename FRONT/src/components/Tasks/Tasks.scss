@@ -14,12 +14,14 @@
     box-shadow: 1px 0 5px #ccc;
   }
   &--completed {
-    background-color: #ccc;
-    text-decoration: line-through;
-    font-style: italic;
+    background-color: teal;
   }
   &-label {
     width: 70%;
+    &--completed {
+      text-decoration: line-through;
+      font-style: italic;
+    }
   }
   &-input {
     border: none;
@@ -28,12 +30,12 @@
     font-size: 1.1rem;
     &:focus {
       outline: none;
-    }
-  &-container-btn {
-    position: relative;
+    }  
+  } 
+  &-containerBtn {
+    display: flex;
+    align-items: center;
   }
-  }
-  
 }
 .button {
   padding: .6rem;
