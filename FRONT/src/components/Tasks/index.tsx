@@ -72,9 +72,6 @@ const Tasks: React.FC<TasksProps> = ({ tasks, getDataFromAPI }) =>  {
         if (!valueTask || /^s*$/.test(valueTask)) {
             return;
         } 
-        if (/^[<>:]/.test(valueTask)) {
-            return;
-        }
                 axios({
                     method: 'put',
                     url: `http://localhost:1337/tasks/${editTaskId}`,
